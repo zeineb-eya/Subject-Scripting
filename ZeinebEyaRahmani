@@ -1,0 +1,44 @@
+#!/bin/bash
+#FILE="ZeinebEyaRahmani"
+#FILE2="functions.sh"
+#HELP="help.txt"
+#sudo cp $FILE /usr/bin
+#sudo cp $FILE2 /usr/bin
+#sudo cp $HELP /etc
+#sudo chmod 777 "/usr/bin/functions.sh"
+#sudo chmod 777 "/usr/bin/ZeinebEyaRahmani"
+. fonctions.sh
+declare o_arg
+if [[ $1 == "" ]]; then echo "ERROR: no options used "
+
+exit 
+else
+	while getopts ":pdhgms:vo:f:" opt; do
+		case $opt in 
+			p) p_func;;
+			d) d_func;;
+			h) help;;
+			g) g_func;;
+			m) m_func;;
+			s) s_func  "$OPTARG";;
+			v) v_func;;
+			o) o_arg=$OPTARG ;;
+			f) f_func "$OPTARG";;
+        		#f) grep -rn --include=*.txt $OPTARG '/home/eya/';;
+        	
+			\?)echo "wrong option";exit 1;;
+		esac
+		done
+
+shift $((OPTIND -1))
+
+if [[ -z $o_arg ]] ; then
+    echo "Options requires an argument and the option -f requires being used with option -o." 
+    exit 1
+fi
+o_func "$o_arg"
+fi
+
+#	if [ "$OPTARG" == "" ]
+#	then echo "ERROR: No input file"
+#	fi
